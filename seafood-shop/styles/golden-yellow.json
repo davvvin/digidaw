@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "title": "Golden Yellow",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "color": "#ce9f00",
+          "name": "Primary",
+          "slug": "primary"
+        },
+        {
+          "color": "#025753",
+          "name": "Secondary",
+          "slug": "secondary"
+        },
+        {
+          "color": "#c10cee",
+          "name": "Tetiary",
+          "slug": "tetiary"
+        },
+        {
+          "color": "#fff7db",
+          "name": "Quaternary",
+          "slug": "quaternary"
+        },
+        {
+          "color": "#F5F9FA",
+          "name": "Text / One",
+          "slug": "text-1"
+        },
+        {
+          "color": "#1F2021",
+          "name": "Text / Two",
+          "slug": "text-2"
+        },
+        {
+          "color": "#f8f0f0",
+          "name": "Base",
+          "slug": "base"
+        },
+        {
+          "color": "#ffffff",
+          "name": "Base / Two",
+          "slug": "base-2"
+        },
+        {
+          "color": "#1C1D1C",
+          "name": "Contrast",
+          "slug": "contrast"
+        },
+        {
+          "color": "#232323",
+          "name": "Contrast / Two",
+          "slug": "contrast-2"
+        },
+        {
+          "color": "#fcfcfc",
+          "name": "Link Color",
+          "slug": "link-color"
+        }
+      ]
+    }
+  }
+}
