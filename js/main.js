@@ -179,10 +179,10 @@ document.querySelectorAll('.btn, .product-btn, .wa-float, .footer-bottom a').for
   const linkEl = document.getElementById('carouselLink');
 
   const IMAGES_DATA = [
-    { bg: '#F4845F', title: 'HAR GOW (HAKAU)', desc: 'Kulit tepung beras yang lembut diisi udang segar utuh — hidangan Dimsum klasik. Dibuat segar setiap pagi untuk menjamin tekstur dan rasa terbaik.' },
-    { bg: '#6BBF7A', title: 'SIU MAI (SIOMAY)', desc: 'Dimsum kukus terbuka berisi daging berbumbu dengan udang utuh di atasnya. Cita rasa gurih yang sempurna dalam setiap gigitan.' },
-    { bg: '#F2A65A', title: 'CHAR SIU BAO', desc: 'Roti panggang lembut berisi daging ayam BBQ manis gurih, berwarna keemasan di atasnya. Favorit anak-anak sepanjang masa.' },
-    { bg: '#85A6E8', title: 'LO MAI GAI', desc: 'Nasi ketan harum dengan ayam dan jamur, dikukus dalam daun teratai. Mengenyangkan dengan porsi yang pas untuk mengawali hari.' }
+    { bg: '#F4845F', title: 'HAKAU UDANG', desc: 'Kulit tepung beras yang super lembut dan transparan, membungkus udang utuh segar nan manis. Dibuat fresh setiap pagi.' },
+    { bg: '#6BBF7A', title: 'SIOMAY AYAM', desc: 'Dimsum kukus klasik berisi daging paha ayam pilihan yang juicy dan gurih. Cita rasa otentik dalam setiap gigitan.' },
+    { bg: '#F2A65A', title: 'LUMPIA UDANG', desc: 'Lumpia premium super renyah dengan isian udang manis melimpah. Rahasia kenikmatan ada di kulitnya yang krispi!' },
+    { bg: '#85A6E8', title: 'EKADO GORENG', desc: 'Telur puyuh utuh berbalut udang cincang, dibungkus kulit tahu yang diikat pandan dan digoreng keemasan.' }
   ];
 
   let activeIndex = 0;
@@ -235,3 +235,84 @@ document.querySelectorAll('.btn, .product-btn, .wa-float, .footer-bottom a').for
   // Initialize
   updateCarousel();
 })();
+
+// ===================== PAGE TRANSITIONS & LOADER =====================
+window.addEventListener('load', () => {
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    // Add a slight delay to ensure smooth transition and allow the animation to show briefly
+    setTimeout(() => {
+      loader.classList.add('hidden');
+    }, 400); 
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('a[href]');
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      const target = link.getAttribute('target');
+      
+      // Ignore anchor links, empty links, external tabs, or special protocols
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || target === '_blank') {
+        return;
+      }
+      
+      e.preventDefault();
+      const loader = document.getElementById('pageLoader');
+      if (loader) {
+        loader.classList.remove('hidden');
+      }
+      
+      // Wait for the fade-in animation to complete before actually changing the URL
+      // Syncs closely with the 0.8s CSS transition for maximum smoothness
+      setTimeout(() => {
+        window.location.href = href;
+      }, 750);
+    });
+  });
+});
+
+// ===================== CATEGORY SCROLLSPY =====================
+document.addEventListener('DOMContentLoaded', () => {
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const sections = document.querySelectorAll('.menu-category');
+
+  if (categoryBtns.length > 0 && sections.length > 0) {
+    // Smooth scroll on click
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Update active state on scroll
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollY = window.scrollY;
+
+      sections.forEach(section => {
+        // We use 150 to offset the sticky header height
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      categoryBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('href').includes(current)) {
+          btn.classList.add('active');
+        }
+      });
+    });
+  }
+});
